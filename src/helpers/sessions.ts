@@ -13,5 +13,5 @@ export const decrypt = async (passwordValidate: string, password: string) => {
 }
 
 export const generateToken = (usuario: string) => {
-    return jwt.sign({usuario}, process.env.JWTKEY || '', { expiresIn: 60 } )
+    return jwt.sign({usuario}, process.env.JWTKEY || '', { expiresIn: '10m' } )
 }

@@ -3,11 +3,13 @@ import { encrypt, decrypt, generateToken } from "../helpers/sessions"
 
 export const serviceCreateUser = async (user: string, password: string) => {
     try {
+        const validateUser = await User.findOne({where: {user}})
+        if(validateUser) return 'USUARIO YA SE ENCUENTRA REGISTRADO'
         const passwordEncrypt = await encrypt(password)
-        await User.create({user, password: passwordEncrypt})
-        console.log('USUARIO CREADO CON EXITO')
+        User.create({user, password: passwordEncrypt})
+        return 'USUARIO CREADO CON EXITO'
     } catch (error) {
-        console.log(error, 'HA OCURRIDO UN ERROR AL CREAR AL USUARIO')
+        return 'HA OCURRIDO UN ERROR AL CREAR AL USUARIO'
     }
 }
 
@@ -16,9 +18,7 @@ export const serviceConsultUser = async (user: string, password: string) => {
         const passwordValidate = await User.findOne({where: {user}})
         if(passwordValidate) {
             const passworddecrypt = await decrypt(passwordValidate.password, password)
-            if(passworddecrypt) {
-                return generateToken(user)
-            }
+            if(passworddecrypt) return generateToken(user)
             return 'CONTRASEÑA INVALIDA'
         }
         return 'USUARIO NO REGISTRADO'
