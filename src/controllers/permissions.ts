@@ -8,8 +8,8 @@ dotenv.config()
 export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization
-        if(!token) return res.send('SE DEBE INGRESAR UN TOKEN VALIDO').status(401)
-        jwt.verify(token, process.env.JWTKEY || '', (error, decode) => {
+        if(!token) return res.send('NECESITAS UN TOKEN VALIDO PARA ACCEDER A ESTE SERVICIO').status(401)
+        jwt.verify(token, process.env.JWTKEY || '', (error, _decode) => {
             if(error) return res.send('TOKEN INVALIDO').status(401)
             next()
         })
