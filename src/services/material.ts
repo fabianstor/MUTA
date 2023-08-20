@@ -1,3 +1,4 @@
+import sequelize from "../database/sequelize"
 import { IMaterial } from "../interface/material"
 import Material from "../models/materials"
 
