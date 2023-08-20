@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-
+// MIDDLEWARE DE VALIDACION DE TOKEN DE ACCESO
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization

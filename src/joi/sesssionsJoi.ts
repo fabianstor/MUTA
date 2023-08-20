@@ -1,5 +1,6 @@
 import Joi from 'joi'
 
+// JOI PARA EL BODY DE LAS SESIONES
 export const schemaSession = Joi.object({
   user: Joi.string()
     .required()

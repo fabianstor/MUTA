@@ -6,6 +6,7 @@ import { validateJoi } from "../controllers/validations"
 
 const materialRoutes = Router()
 
+// RUTAS DE MATERIALES CON VERIFICACION DE TOKEN Y JOI
 materialRoutes.get('/', verifyToken, materialController.getMaterials)
 materialRoutes.get('/:id', verifyToken, validateJoi(SchemaMaterialnId), materialController.getMaterial)
 materialRoutes.post('/', verifyToken, validateJoi(null, schemaMaterial), materialController.createMaterial)

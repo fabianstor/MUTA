@@ -2,6 +2,7 @@ import { DataTypes, Model } from 'sequelize'
 import sequelize from '../database/sequelize'
 import Material from './materials';
 
+// MODELO DE COLLECTION
 class Collection extends Model {
     public id!: number;
     public materialId!: string;

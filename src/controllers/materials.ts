@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import * as materialService from "../services/material"
 import { IMaterial } from "../interface/material"
 
+// OBTENER TODOS LOS MATERIALES
 export const getMaterials = async (_req: Request, res: Response) => {
     try {
         const materials = await materialService.serviceGetAllMaterials()
@@ -11,6 +12,7 @@ export const getMaterials = async (_req: Request, res: Response) => {
     }
 }
 
+// OBTENER UN MATERIAL POR EL ID
 export const getMaterial = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
@@ -22,6 +24,7 @@ export const getMaterial = async (req: Request, res: Response) => {
     }
 }
 
+// CREAR UN NUEVO MATERIAL
 export const createMaterial = async (req: Request, res: Response) => {
     try {
         const material: IMaterial = req.body
@@ -32,6 +35,7 @@ export const createMaterial = async (req: Request, res: Response) => {
     }
 }
 
+// ACTUALIZAR UN MATERIAL EXISTENTE
 export const updateMaterial = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
@@ -43,6 +47,7 @@ export const updateMaterial = async (req: Request, res: Response) => {
     }
 }
 
+// BORRAR UN MATERIAL EXISTENTE
 export const deleteMaterial = async (req: Request, res: Response) => {
     try {
         const {id} = req.params

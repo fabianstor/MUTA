@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import {Schema} from 'joi'
 
+// MIDDLEWARE PARA VALIDAR LAS PROPIEDADES DE LOS ID Y BODY DE CONTROLADORES
 export const validateJoi = (schema: Schema | null, schemaBody?: Schema)=> {
     return (req: Request, res: Response, next: NextFunction) => {
         try {
