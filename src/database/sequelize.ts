@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   process.env.PASSWORD || 'admin',
   {
     dialect: 'postgres',
-    logging: false
+    logging: false,
   }
 );
 
