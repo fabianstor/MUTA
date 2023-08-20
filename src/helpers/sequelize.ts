@@ -1,3 +1,4 @@
+// ALTERS PARA CAMBIAR EL TIPO DE DATO EN LAS TABLAS SIN TZ
 export const alterTables = `
     ALTER TABLE public."Collections" ALTER COLUMN "date" TYPE timestamp USING "date"::timestamp;
     ALTER TABLE public."Collections" ALTER COLUMN "createdAt" TYPE timestamp USING "createdAt"::timestamp;

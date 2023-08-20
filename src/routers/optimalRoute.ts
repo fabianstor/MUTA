@@ -6,6 +6,7 @@ import { validateJoi } from "../controllers/validations"
 
 const routeRouter = Router()
 
+// RUTA DE RUTA MÁS OPTIMA CON VERIFICACION DE TOKEN, JOI Y EXISTENCIA DE MATERIALES
 routeRouter.post('/', verifyToken, validateJoi(null, schemaRoute), validateExists, route)
 
 export default routeRouter

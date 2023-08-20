@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize'
 import sequelize from '../database/sequelize'
 
+// MODELO DE MATERIAL
 class Material extends Model {
     public id!: number;
     public name!: string;

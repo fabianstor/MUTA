@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { calculateRoute, validateMaterials } from "../services/optimalRoute"
 
+// BUSCAR LA RUTA MAS OPTIMA PARA LA RECOLECCION DE RECURSOS
 export const route = async (req: Request, res: Response) => {
     try {
         const {materials, totalWeight} = req.body
@@ -11,6 +12,7 @@ export const route = async (req: Request, res: Response) => {
     }
 }
 
+// VALIDAR SI LOS MATERIALES EXISTEN BASADO EN EL NOMBRE
 export const validateExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const response = await validateMaterials(req.body.materials)

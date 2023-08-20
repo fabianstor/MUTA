@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import { schemaMaterial } from './materialsJoi'
 
+// JOI PARA CONSULTA RUTA MÁS OPTIMA PARA UNA RECOLECCION
 export const schemaRoute = Joi.object({
     materials: Joi.array()
       .items(schemaMaterial)

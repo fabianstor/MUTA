@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { serviceConsultUser, serviceCreateUser } from "../services/sessions"
 
+// CREAR UN NUEVO USUARIO
 export const createUser = async (req: Request, res: Response) => {
     try {
         const {user, password} = req.body
@@ -11,6 +12,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
 }
 
+// CONSULTAR USUARIO Y GENERAR TOKEN
 export const logInUser = async (req: Request, res: Response) => {
     try {
         const {user, password} = req.body

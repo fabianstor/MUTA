@@ -6,6 +6,7 @@ import { SchemaCollectionId, SchemaCollectionBody } from "../joi/collectionsJoi"
 
 const colecctionRoutes = Router()
 
+// RUTAS DE COLECCIONES CON MIDDLEWARES PARA TOKEN Y  JOI
 colecctionRoutes.get('/', verifyToken, collectionController.getCollections)
 colecctionRoutes.get('/:id', verifyToken, validateJoi(SchemaCollectionId), collectionController.getCollection)
 colecctionRoutes.post('/', verifyToken, validateJoi(null, SchemaCollectionBody), collectionController.createCollection)
