@@ -1,11 +1,13 @@
 import Joi from 'joi'
 
+// JOI PARA ID DE LOS MATERIALES
 export const SchemaMaterialnId = Joi.number().required().positive().messages({
     'any.required': 'El id es obligatorio.',
     'number.base': 'El id debe ser un numero',
     'number.positive': 'El id debe ser un numero positivo'
 })
 
+// JOI PARA BODY DE LOS MATERIALES
 export const schemaMaterial = Joi.object({
     name: Joi.string()
       .required()

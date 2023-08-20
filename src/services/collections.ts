@@ -1,8 +1,8 @@
-import sequelize from "../database/sequelize"
 import { ICollection } from "../interface/collections"
 import Collection from "../models/collections"
 import Material from "../models/materials"
 
+// CONSULTAR TODAS LAS RECOLECCIONES
 export const serviceGetAllCollections = async () => {
     try {
         return (await Collection.findAll())
@@ -11,6 +11,7 @@ export const serviceGetAllCollections = async () => {
     }
 }
 
+// CONSULTAR UNA RECOLECCION ESPECIFICA
 export const serviceGetCollectionById = async (id: number) => {
     try {
         return (await Collection.findByPk(id))
@@ -20,8 +21,10 @@ export const serviceGetCollectionById = async (id: number) => {
     }
 }
 
+// CREAR UNA NUEVA RECOLECCION
 export const serviceCreateCollection = async (collection: ICollection) => {
     try {
+        // VALIDAR QUE EXISTA UN MATERIAL CON EL ID DADO DEL MATERIAL
         const validateMaterialExists = await Material.findByPk(collection.materialId)
         if(!validateMaterialExists) return {message: 'NO EXISTE EL ID DEL MATERIAL', status: 200}
         await Collection.create({...collection})
@@ -31,20 +34,26 @@ export const serviceCreateCollection = async (collection: ICollection) => {
     }
 }
 
+// ACTUALIZAR RECOLECCION
 export const serviceUpdateCollection = async (id: number, collection: ICollection) => {
     try {
+        // VALIDAR QUE EXISTA EL MATERIAL BASADO EN SU ID
         const validateMaterialExists = await Material.findByPk(collection.materialId)
         if(!validateMaterialExists) return {message: 'NO EXISTE EL ID DEL MATERIAL', status: 200}
+        // VALIDAR QUE LA RECOLECCION QUE SE QUIERE ACTUALIZAR EXISTA
         const validateExists = await Collection.update({...collection}, {where: {id}})
         if(!validateExists[0]) return {message: 'LA RECOLECCION NO SE ENCUENTRA REGISTRADA', status: 200}
+        // RECOLECCION ACTUALIZADA CON EXITO
         return {message: 'RECOLECCION ACTUALIZADO CON EXITO', status: 200}
     } catch (error) {
         return {message: 'ERROR AL ACTUALIZAR RECOLECCION', status: 400}
     }
 }
 
+// ELIMINAR RECOLECCION
 export const serviceDeleteCollection = async (id: number) => {
     try {
+        // VALIDAR QUE EXISTA LA RECOLECCION ANTES DE ELIMINAR
         const validateExists = await Collection.destroy({where: {id}})
         if(!validateExists) return {message: 'ESTA RECOLECCION NO SE ENCUENTRA REGISTRADA', status: 200}
         return {message: 'RECOLECCION ELIMINADA CON EXITO', status: 200}

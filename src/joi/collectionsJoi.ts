@@ -1,10 +1,13 @@
 import Joi from 'joi'
 
+// JOI PARA EL ID DE LAS COLECCIONES
 export const SchemaCollectionId = Joi.number().required().positive().messages({
   'any.required': 'El id es obligatorio.',
   'number.base': 'El id debe ser un numero',
   'number.positive': 'El id debe ser un numero positivo'
 })
+
+// JOI PARA EL BODY DE LAS COLECCIONES
 export const SchemaCollectionBody = Joi.object({
     materialId: Joi.number()
       .integer()

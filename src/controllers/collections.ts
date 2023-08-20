@@ -2,15 +2,17 @@ import { Request, Response } from "express"
 import * as collectionService from "../services/collections"
 import { ICollection } from "../interface/collections"
 
+// OBTENER TODAS LAS RECOLECCIONES
 export const getCollections = async (_req: Request, res: Response) => {
     try {
         const collections = await collectionService.serviceGetAllCollections()
         res.send(collections).status(200)
     } catch (error) {
-        res.send('ERROR AL CONSULTAR LAS COLECCIONES').status(400)
+        res.send('ERROR AL CONSULTAR LAS RECOLECCIONES').status(400)
     }
 }
 
+//OBTENER UNA RECOLECCION BASADA EN EL ID DE LA RECOLECCION
 export const getCollection = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
@@ -18,10 +20,11 @@ export const getCollection = async (req: Request, res: Response) => {
         if(colecction) return res.send(colecction).status(200)
         return res.send('RECOLECCION NO REGISTRADA').status(200)
     } catch (error) {
-        res.send('ERROR AL CONSULTAR COLECCION')
+        res.send('ERROR AL CONSULTAR RECOLECCION')
     }
 }
 
+// CREAR UNA NUEVA RECOLECCION
 export const createCollection = async (req: Request, res: Response) => {
     try {
         const collection: ICollection = req.body
@@ -32,6 +35,7 @@ export const createCollection = async (req: Request, res: Response) => {
     }
 }
 
+// ACTUALIZAR UNA RECOLECCION EXISTENTE
 export const updateCollection = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
@@ -43,6 +47,7 @@ export const updateCollection = async (req: Request, res: Response) => {
     }
 }
 
+//ELIMINAR UNA RECOLECCION
 export const deleteCollection = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
