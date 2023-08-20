@@ -6,9 +6,9 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const {user, password} = req.body
         const response = await serviceCreateUser(user, password)
-        res.send(response).status(201)
+        res.status(response.status).send(response.message)
     } catch (error) {
-        res.send('ERROR AL CREAR USUARIO').status(400)
+        res.status(400).send('ERROR AL CREAR USUARIO')
     }
 }
 
@@ -17,8 +17,8 @@ export const logInUser = async (req: Request, res: Response) => {
     try {
         const {user, password} = req.body
         const response = await serviceConsultUser(user, password)
-        res.send({respuesta: response}).status(200)
+        res.status(response.status).send({respuesta: response.message})
     } catch (error) {
-        res.send('ERROR AL CONSULTAR USUARIO').status(400)
+        res.status(400).send('ERROR AL CONSULTAR USUARIO')
     }
 }

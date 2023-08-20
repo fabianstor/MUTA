@@ -9,14 +9,14 @@ export const validateJoi = (schema: Schema | null, schemaBody?: Schema)=> {
                 const {error} = schema.validate(req.params.id, {abortEarly: false})
                 if(error) {
                     const messagesError = error.details.map((detalle) => detalle.message)
-                    return res.send(messagesError).status(400)
+                    return res.status(400).send(messagesError)
                 }
             }
             if(req.body && schemaBody) {
                 const {error} = schemaBody.validate(req.body, {abortEarly: false})
                 if(error) {
                     const messagesError = error.details.map((detalle) => detalle.message)
-                    return res.send(messagesError).status(400)
+                    return res.status(400).send(messagesError)
                 }
             }
             next()

@@ -24,7 +24,7 @@ export const serviceCreateMaterial = async (material: IMaterial) => {
     try {
         // VALIDAR POR EL NOMBRE DEL MATERIAL SI YA SE ENCUENTRA REGISTRADO
         const validateExists = await Material.findOne({where: {name: material.name}})
-        if(validateExists) return {message: 'EL MATERIAL YA SE ENCUENTRA REGISTRADO', status: 200}
+        if(validateExists) return {message: 'EL MATERIAL YA SE ENCUENTRA REGISTRADO', status: 409}
         // CREAR MATERIAL
         await Material.create({...material})
         return {message: 'MATERIAL CREADO CON EXITO', status: 201}
@@ -38,11 +38,11 @@ export const serviceUpdateMaterial = async (id: number, material: IMaterial) => 
     try {
         // VALIDAR QUE SI EXISTA EL REGISTRO DEL MATERIAL
         const validateExists = await Material.findOne({where: {id: id}})
-        if(!validateExists) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 200}
+        if(!validateExists) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 404}
         // VALIDAR QUE NO EXISTA OTRO MATERIAL CON EL MISMO NOMBRE QUE SE VA A ACTUALIZAR
         const validateDuplicate = await Material.findOne({where: {name: material.name}, attributes: ['id']})
         // EL REGISTRO ENCONTRADO PARA ESE NOMBRE DEBE TENER EL MISMO ID QUE SE LE PASA PARA ACTUALIZAR
-        if(validateDuplicate && validateDuplicate.id != id) return {message: `OTRO MATERIAL YA CUENTA CON EL NOMBRE DE ${material.name}`, status: 200}
+        if(validateDuplicate && validateDuplicate.id != id) return {message: `OTRO MATERIAL YA CUENTA CON EL NOMBRE DE ${material.name}`, status: 409}
         // ACTUALIZAR MATERIAL
         await Material.update({...material}, {where: {id}})
         return {message: 'MATERIAL ACTUALIZADO CON EXITO', status: 200}
@@ -57,7 +57,7 @@ export const serviceDeleteMaterial = async (id: number) => {
     try {
         // VALIDAR QUE EXISTA EL REGISTRO ANTES DE ELIMINAR
         const validateExists = await Material.destroy({where: {id}})
-        if(!validateExists) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 200}
+        if(!validateExists) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 404}
         return {message: 'MATERIAL ELIMINADO CON EXITO', status: 200}
     } catch (error) {
         return {message: 'ERROR AL ELIMINAR MATERIAL', status: 400}
