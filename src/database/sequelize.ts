@@ -4,12 +4,12 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 const sequelize = new Sequelize(
-  process.env.DATABASE || 'postgres',
-  process.env.USER || 'postgres',
-  process.env.PASSWORD || 'admin',
+  process.env.DATABASE ?? 'postgres',
+  process.env.USER ?? 'postgres',
+  process.env.PASSWORD ?? 'admin',
   {
     dialect: 'postgres',
-    logging: false,
+    logging: false
   }
 );
 
