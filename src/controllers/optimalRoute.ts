@@ -8,7 +8,7 @@ export const route = async (req: Request, res: Response) => {
         const response = await calculateRoute(materials, Number(totalWeight))
         res.send(response.message).status(response.status)
     } catch (error) {
-        res.send('ERROR AL PROCESAR LA INFORMACION DE LOS MATERIALES').status(400)
+        res.status(400).send('ERROR AL PROCESAR LA INFORMACION DE LOS MATERIALES')
     }
 }
 
@@ -16,9 +16,9 @@ export const route = async (req: Request, res: Response) => {
 export const validateExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const response = await validateMaterials(req.body.materials)
-        if(response?.message)  return res.send(response.message).status(response.status)
+        if(response?.message)  return res.status(response.status).send(response.message)
         return next()
     } catch (error) {
-        return res.send({message: 'ERROR AL VALIDAR LOS MATERIALES'}).status(400)
+        return res.status(400).send({message: 'ERROR AL VALIDAR LOS MATERIALES'})
     }
 }
