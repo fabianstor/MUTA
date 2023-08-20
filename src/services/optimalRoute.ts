@@ -1,23 +1,41 @@
 import { IMaterial } from "../interface/material";
+import Material from "../models/materials";
 
 export const calculateRoute = async (materials: IMaterial[], totalWeight: number) => {
     try {
         let total = 0
-        const result: Record<string, number> = {}
+        const response: IMaterial[] = []
         let remainingWeight = totalWeight
         materials.forEach((material: IMaterial, index) => {
             materials[index].total = material.value * material.weight
         })
-        materials.sort((a, b) => b.total - a.total).forEach((material) => {
+        materials = materials.sort((a, b) => b.total - a.total)
+        materials.forEach((material) => {
             if(remainingWeight >= material.weight) {
-                result[material.name] = material.total
+                const result: IMaterial = {} as IMaterial
+                result.name = material.name
+                result.total = material.total
+                response.push(result)
                 remainingWeight = remainingWeight - material.weight
                 total = total + material.total
             }
         })
-        if(Object.keys(result).length == 0) return {message: 'NO HAY RUTA A TOMAR PARA ESTA SITUACION', status: 200}
-        return {message: `LA MEJOR RUTA A TOMAR ES: ${JSON.stringify(result)} PARA RECOLECTAR UN TOTAL DE ${total}`, status: 200}
+        if(response.length == 0) return {message: 'NO HAY RUTA A TOMAR PARA ESTA SITUACION', status: 200}
+        return {message: {message: 'LA MEJOR DECISION A TOMAR', result: response, total}, status: 200}
     } catch (error) {
         return {message: 'ERROR AL PROCESAR LA INFORMACION', status: 400}
+    }
+}
+
+export const validateMaterials = async (materials: IMaterial[]) => {
+    try {
+        const nonExistent: string[] = []
+        for (const material of materials) {
+            const validate = await Material.findOne({where: {name: material.name}})
+            if(!validate) nonExistent.push(material.name)
+        }
+        if(nonExistent.length > 0) return {message: `LOS SIGUIENTES MATERIALES NO EXISTEN: ${JSON.stringify(nonExistent)}`, status: 200}
+    } catch (error) {
+        return {message: 'ERROR AL VALIDAR MATERIALES', status: 400}
     }
 }

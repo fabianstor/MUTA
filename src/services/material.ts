@@ -31,10 +31,14 @@ export const serviceCreateMaterial = async (material: IMaterial) => {
 
 export const serviceUpdateMaterial = async (id: number, material: IMaterial) => {
     try {
-        const validateExists = await Material.update({...material}, {where: {id}})
-        if(!validateExists[0]) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 200}
+        const validateDuplicate = await Material.findOne({where: {name: material.name}, attributes: ['id']})
+        const validateExists = await Material.findOne({where: {id: id}})
+        if(!validateExists) return {message: 'EL MATERIAL NO SE ENCUENTRA REGISTRADO', status: 200}
+        if(validateDuplicate && validateDuplicate.id != id) return {message: `OTRO MATERIAL YA CUENTA CON EL NOMBRE DE ${material.name}`, status: 200}
+        await Material.update({...material}, {where: {id}})
         return {message: 'MATERIAL ACTUALIZADO CON EXITO', status: 200}
     } catch (error) {
+        console.log(error)
         return {message: 'ERROR AL ACTUALIZAR MATERIAL', status: 400}
     }
 }
